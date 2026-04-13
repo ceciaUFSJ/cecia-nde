@@ -145,6 +145,10 @@ body {
 
 
 
+  
+
+
+
 @media (max-width: 768px) {
 
   /* ESCONDE AS LOGOS NO MOBILE */
@@ -263,6 +267,88 @@ body {
 .file {
   margin: 6px 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+  .reunioes-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  align-items: start;
+  margin-top: 10px;
+}
+
+@media (max-width: 768px){
+  .reunioes-grid{
+    grid-template-columns: 1fr;
+  }
+}
+
+.reunioes-box{
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 12px 14px;
+  background: #fff;
+}
+
+.reunioes-box .tag{
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 999px;
+  margin-bottom: 8px;
+}
+
+.reunioes-box .tag.futuras{
+  background: #e7f5ff;
+  color: #0b5ed7;
+  border: 1px solid #b6e0ff;
+}
+
+.reunioes-box .tag.passadas{
+  background: #f1f3f5;
+  color: #495057;
+  border: 1px solid #dee2e6;
+}
+
+.reunioes-box ul{
+  margin: 8px 0 0 18px;
+}
+
+.reunioes-box li{
+  margin: 4px 0;
+}
+
+.reunioes-box li.passada{
+  text-decoration: line-through;
+  color: #777;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 
 
 </style>

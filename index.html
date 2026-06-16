@@ -488,8 +488,10 @@ do Projeto Pedagógico do Curso (PPC).
 
   
 
+<p>
 Mais informações encontram-se na pasta
 <strong>“Regimentos e Resoluções Importantes”</strong>.
+</p>
 
 <div id="nde">Carregando composição do NDE...</div>
 
@@ -564,22 +566,38 @@ async function carregarDatasNDE(){
   hoje.setHours(0,0,0,0);
 
   const todas = t.split(/\r?\n/).slice(1)
-    .map(l => l.replace(/"/g,"").trim())
-    .filter(d => d && d.includes("/"));
+  .map(l => {
+    const cols = l.replace(/"/g,"").split(",");
+    return {
+      data: (cols[0] || "").trim(),
+      tipo: (cols[1] || "").trim()
+    };
+  })
+  .filter(x => x.data);
 
+
+
+
+  
   const futuras = [];
   const passadas = [];
 
-  for (const d of todas) {
-    const dt = parseDataBR(d);
-    if (isNaN(dt.getTime())) continue;
 
-    if (dt >= hoje) futuras.push(d);
-    else passadas.push(d);
-  }
+for (const item of todas) {
+  const dt = parseDataBR(item.data);
 
-  futuras.sort((a,b)=>parseDataBR(a)-parseDataBR(b));
-  passadas.sort((a,b)=>parseDataBR(b)-parseDataBR(a));
+  if (isNaN(dt.getTime())) continue;
+
+  if (dt >= hoje) futuras.push(item);
+  else passadas.push(item);
+}
+  
+
+
+  futuras.sort((a,b)=>parseDataBR(a.data)-parseDataBR(b.data));
+passadas.sort((a,b)=>parseDataBR(b.data)-parseDataBR(a.data));
+
+  
 
   const html = `
     <div class="reunioes-grid">
@@ -588,7 +606,7 @@ async function carregarDatasNDE(){
         <span class="tag futuras">Próximas</span>
         ${
           futuras.length
-          ? `<ul>${futuras.map(d=>`<li>${d}</li>`).join("")}</ul>`
+          ? `<ul>${futuras.map(d =>`<li>${d.data} – <strong>${d.tipo}</strong></li>` ).join("")}</ul>`
           : `<div>Nenhuma reunião futura.</div>`
         }
       </div>
@@ -597,7 +615,7 @@ async function carregarDatasNDE(){
         <span class="tag passadas">Passadas</span>
         ${
           passadas.length
-          ? `<ul>${passadas.map(d=>`<li class="passada">${d}</li>`).join("")}</ul>`
+          ? `<ul>${passadas.map(d =>`<li class="passada">${d.data} – ${d.tipo}</li>`).join("")}</ul>`
           : `<div>Nenhuma reunião passada registrada.</div>`
         }
       </div>
